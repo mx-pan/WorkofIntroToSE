@@ -2,6 +2,7 @@ var App = function () {
 
     var isMainPage = false;
     var isMapPage = false;
+	var isTestPage = false;
     var isIE8 = false;
 
 
@@ -42,7 +43,8 @@ var App = function () {
                     }
                 },
                 onRegionClick: function (element, code, region) {
-                    var message = 'You clicked "' + region + '" which has the code: ' + code.toUpperCase();
+                    //var message = 'You clicked "' + region + '" which has the code: ' + code.toUpperCase();
+					var message = region + code;
                     alert(message);
                 }
             };
@@ -116,7 +118,8 @@ var App = function () {
                 },
                 onRegionClick: function (element, code, region) {
                     //sample to interact with map
-                    var message = 'You clicked "' + region + '" which has the code: ' + code.toUpperCase();
+                    //var message = 'You clicked "' + region + '" which has the code: ' + code.toUpperCase();
+					var message = region + code;
                     alert(message);
                 }
             };
@@ -1621,7 +1624,8 @@ var App = function () {
                     if (isMainPage) {
                         jQuery('.vmaps').each(function () {
                             var map = jQuery(this);
-                            map.width(map.parent().parent().width());
+                            //map.width(map.parent().parent().width());
+							map.width(map.parent().width()); //ADDED
                         });
                     }
                     if (isMapPage) {
@@ -1630,6 +1634,19 @@ var App = function () {
                             map.width(map.parent().width());
                         });
                     }
+					
+					
+					if (isTestPage) {
+                        handleDashboardCalendar(); // handles full calendar for main page
+                    }
+					
+					if (isTestPage) {
+                        jQuery('.vmaps').each(function () {
+                            var map = jQuery(this);
+                            map.width(map.parent().width());
+                        });
+                    }
+					
                     // fix event form chosen dropdowns
                     $('#event_priority_chzn').width($('#event_title').width() + 15);
                     $('#event_priority_chzn .chzn-drop').width($('#event_title').width() + 13);
@@ -2271,7 +2288,8 @@ var App = function () {
 
             if (isMainPage) {
                 handleDashboardCharts(); // handles plot charts for main page
-                handleJQVMAP(); // handles vector maps for home page
+                //handleJQVMAP(); // handles vector maps for home page
+				handleAllJQVMAP(); // handles vector maps for interactive map page   //ADDED
                 handleDashboardCalendar(); // handles full calendar for main page
                 handleChat() // handles dashboard chat
             } else {
@@ -2281,6 +2299,15 @@ var App = function () {
 
             if (isMapPage) {
                 handleAllJQVMAP(); // handles vector maps for interactive map page
+            }
+			
+			
+			if (isTestPage) {
+                handleAllJQVMAP(); // handles vector maps for interactive map page
+				handleDashboardCharts(); // handles plot charts for main page
+                //handleJQVMAP(); // handles vector maps for home page
+                handleDashboardCalendar(); // handles full calendar for main page
+                handleChat() // handles dashboard chat
             }
 
             handleScrollers(); // handles slim scrolling contents
@@ -2378,6 +2405,12 @@ var App = function () {
         setMapPage: function (flag) {
             isMapPage = flag;
         }
+		
+		// set Test page
+		/* setTestPage: function (flag) {
+            isTestPage = flag;
+        } */
+
 
     };
 
