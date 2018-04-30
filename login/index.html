@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<title> 公园植物信息管理平台</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-		<link href="../Images/Favicon/favicon.ico" rel="shortcut icon" type="image/x-icon">
+	<link href="../Images/Favicon/favicon.ico" rel="shortcut icon" type="image/x-icon">
 	<link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
 	<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
@@ -14,7 +14,24 @@
 	<link href="assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
 	<link rel="stylesheet" type="text/css" href="assets/uniform/css/uniform.default.css" />
 	<link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-	<link href="assets/jqvmap/jqvmap/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="assets/jqvmap/jqvmap/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
+    <script src="js/jquery-1.8.3.min.js"></script>
+    
+    <script>
+       // window.stop();
+            $.get("/api/check",function(data,status){
+                if(data.state=='FAIL'){
+                    window.stop();
+                    window.location.href='../login.html';
+                }else{
+                        var loadingMask = document.getElementById('loadingDiv');
+                        loadingMask.parentNode.removeChild(loadingMask);
+                    }
+            });
+       
+    </script>
+
+    <script src="js/loading.js"></script>
 </head>
 
 
@@ -180,7 +197,10 @@
 								<li><a href="#"><i class="icon-tasks"></i> 我的任务</a></li>
 								<li><a href="#"><i class="icon-calendar"></i> 我的日历</a></li>
 								<li class="divider"></li>
-								<li><a href="../Home.html"><i class="icon-key"></i> 登出</a></li>
+                                <!--
+                                <li><a href="../Home.html" id="logout"><i class="icon-key"></i> 登出</a></li>
+                                -->
+                                <li><a id="logout1"><i class="icon-key"></i> 登出</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -209,21 +229,26 @@
  
 						<li><a class="" >日历</a></li>
                         <li><a class="" >聊天</a></li>
-                        <li><a class="" > 图册</a></li>
+                        <li><a class="" href="gallery.html"> 图册</a></li>
                     </ul>
 				</li>
 
                 <li class="has-sub">
                     <a href="javascript:;" class="">
-                        <span class="icon-box"><i class="icon-glass"></i></span> 其他
+                        <span class="icon-box"><i class="icon-book"></i></span> 数据库管理
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li><a class="" href="lock.html">锁定屏幕</a></li>
-                    
+                        <li><a class="" target="_blank" href="http://localhost/admin/USER/">用户管理</a></li>
+                        <li><a class="" target="_blank" href="http://localhost/admin/PLANTS/">植物管理</a></li>
                     </ul>
                 </li>
-				<li><a class="" href="../Home.html"><span class="icon-box"><i class="icon-off"></i></span> 登出</a></li>
+
+                <li><a class="" href="lock.html"><span class="icon-box"><i class=" icon-lock"></i></span> 锁定屏幕</a></li>
+                <!--
+                <li><a class="" href="../Home.html" id="logout"><span class="icon-box"><i class="icon-off"></i></span> 登出</a></li>
+                -->
+                <li><a class="" id="logout2"><span class="icon-box"><i class="icon-off"></i></span> 登出</a></li>
 			</ul>
 		</div>
 		<div id="main-content">
@@ -409,7 +434,8 @@
 									</span>
 								</div>
 								<div class="widget-body">
-                                    <div class="timeline-messages">
+                                       <!--  
+                                        <div class="timeline-messages">
                                             <div class="msg-time-chat">
                                                 <a class="message-img" href="#"><img alt="" src="img/avatar1.jpg" class="avatar"></a>
                                                 <div class="message-body msg-in">
@@ -447,6 +473,55 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    -->
+
+                                    <ul class="chats">
+                                        <li class="out">
+                                            <img class="avatar" alt="" src="img/avatar1.jpg" />
+                                            <div class="message">
+                                                 <span class="arrow"></span>
+                                                <a href="#" class="name">BIT_ADMIN</a>
+                                                <span class="datetime">1:55pm, 13th March 2018</span>
+                                                    <span class="body">
+                                                            我这儿的紫荆树好像出现了一些病状，个别枝条从枝顶端开始的叶片出现发黄、脱落，这可能会是什么病？
+                                                    </span>
+                                            </div>
+                                        </li>
+                                        <li class="in">
+                                            <img class="avatar" alt="" src="img/avatar2.jpg" />
+                                            <div class="message">
+                                                <span class="arrow"></span>
+                                                <a href="#" class="name">Automation</a>
+                                                <span class="datetime">2:01pm, 13th March 2018</span>
+													<span class="body">
+                                                            这可能是紫荆枯萎病，你可以剥开病枝树皮检查一下，如果木质部有黄褐色纵条纹，其横断面可见黄褐色轮纹状坏死斑就极有可能是该病。
+													</span>
+                                            </div>
+                                        </li>
+                                        <li class="out">
+                                            <img class="avatar" alt="" src="img/avatar1.jpg" />
+                                            <div class="message">
+                                                <span class="arrow"></span>
+                                                <a href="#" class="name">BIT_ADMIN</a>
+                                                <span class="datetime">2:03pm, 13th March 2018</span>
+													<span class="body">
+                                                            对于这种病害有什么防治建议吗？
+													</span>
+                                            </div>
+                                        </li>
+                                        <li class="in">
+                                            <img class="avatar" alt="" src="img/avatar2.jpg" />
+                                            <div class="message">
+                                                <span class="arrow"></span>
+                                                <a href="#" class="name">Automation</a>
+                                                <span class="datetime">2:06pm, 13th March 2018</span>
+													<span class="body">
+                                                        及时剪除枯死的病枝、病株，集中烧毁，可以用50%福美双可湿性粉剂200倍或50%多菌灵可湿粉400倍，或用抗霉菌素120水剂100ppm药液灌根。平时也要加强养护管理，增强树势，提高植株抗病能力。
+                                                    </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+
 									<div class="chat-form">
 										<div class="input-cont">
 											<input type="text" placeholder="Type a message here..." />
@@ -731,7 +806,21 @@
 		<div class="span pull-right">
 			<span class="go-top"><i class="icon-arrow-up"></i></span>
 		</div>
-	</div>
+    </div>
+    
+    <!--
+    <script>
+            $("div").hide();
+            $.get("/api/check",function(data,status){
+                if(data.state=='FAIL'){
+                    window.stop();
+                    window.location.href='../login.html';
+                }
+            });
+       
+     </script>
+     -->
+
 	<script src="js/jquery-1.8.3.min.js"></script>
 	<script src="assets/jquery-slimscroll/jquery-ui-1.9.2.custom.min.js"></script>
 	<script src="assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
@@ -762,7 +851,7 @@
   	<script src="assets/fancybox/source/jquery.fancybox.pack.js"></script>
   
 
-
+    
   
 	 
 	<script>
@@ -772,7 +861,26 @@
 			App.setMainPage(true);
             App.init();
 		});
-	</script>
+    </script>
+    
+    <script>
+        $("#logout1").click(function(){
+            $.get("/api/logout",function(data,status){
+                     if(data.state=='SUCC'){
+                         window.location.href='../login.html';
+                     }
+                 });
+         });
+     </script>
+     <script>
+            $("#logout2").click(function(){
+                $.get("/api/logout",function(data,status){
+                         if(data.state=='SUCC'){
+                             window.location.href='../login.html';
+                         }
+                     });
+             });
+     </script>
 	
 	
 	
